@@ -1,0 +1,258 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+hr {
+	border: 2px solid #666;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	color: #fff;
+}
+
+.loading {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+
+	.spinner {
+		width: 100px;
+		height: 100px;
+		background-size: 100%;
+	}
+}
+
+.weather-forecast-wrapper {
+	width: 40%;
+	margin: 0 auto;
+
+	@media only screen and (max-width: 64em) {
+		width: 60%;
+	}
+
+	@media only screen and (max-width: 48em) {
+		width: 100%;
+	}
+
+	header {
+		text-align: center;
+
+		.heading {
+			font-size: 18px;
+			font-weight: 700;
+			color: #3273ca;
+			padding: 10px;
+			text-transform: uppercase;
+		}
+	}
+
+	.weather-dashboard {
+		text-align: center;
+		margin-bottom: 15px;
+
+		.error {
+			display: none;
+		}
+
+		section.controls {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 1px 3px 0 #a5a5a5;
+
+			div {
+				width: 100%;
+				display: flex;
+			}
+
+			input {
+				width: 100%;
+				font-size: 18px;
+				color: #000;
+				text-align: center;
+				display: inline-block;
+				padding: 14px;
+				border: none;
+
+				&::placeholder {
+					color: #3273ca;
+				}
+
+				&:focus {
+					outline: none;
+
+					&::placeholder {
+						color: transparent;
+					}
+				}
+
+				&.search {
+					width: 45px;
+					cursor: pointer;
+
+					&:active {
+						background-color: #3273ca;
+					}
+				}
+			}
+		}
+
+		&.invalid-city {
+			section.controls {
+				input {
+					background-color: #ff1744;
+				}
+			}
+
+			.error {
+				display: block;
+				color: #ff1744;
+				padding: 0 0 20px 0;
+			}
+		}
+	}
+
+	.forecast-tiles {
+		width: 100%;
+		height: 100%;
+		white-space: nowrap;
+		overflow-y: scroll;
+
+		.forecast-tile {
+			width: 75px;
+			text-align: center;
+			color: #000;
+			display: inline-block;
+			cursor: pointer;
+
+			.icon {
+				text-transform: uppercase;
+				font-size: 14px;
+			}
+
+			.weather-info {
+				padding: 5px;
+				flex-direction: column;
+
+				.min-max {
+					padding: 5px;
+					font-size: 14px;
+
+					p {
+						font-size: 14px;
+						padding: 2px 0;
+					}
+				}
+
+				.more-info {
+					padding: 0 10px;
+					font-size: 12px;
+				}
+			}
+
+			.primary-info {
+				display: flex;
+				flex-direction: column;
+			}
+
+			&.expanded {
+				.detailed-info {
+					display: block;
+				}
+			}
+		}
+	}
+
+	.forecast {
+		.detailed-info {
+			width: 100%;
+			height: 100%;
+			color: #000;
+			text-align: center;
+			position: relative;
+
+			-webkit-transition: height 0.20s ease-in;
+			-moz-transition: height 0.20s ease-in;
+			-o-transition: height 0.20s ease-in;
+			transition: height 0.20s ease-in;
+
+			.hourly {
+				padding: 25px 10px 20px;
+
+				.hourly-info {
+					display: flex;
+					padding: 15px 0;
+
+					.hour-temperature {
+						font-size: 16px;
+						font-weight: bold;
+					}
+
+					.hour-of-the-day {
+						font-weight: normal;
+						font-size: 16px;
+					}
+
+					div {
+						width: 50%;
+						padding: 5px 10px;
+					}
+				}
+			}
+
+			.forecast-empty {
+				position: relative;
+				top: 180px;
+			}
+		}
+	}
+}

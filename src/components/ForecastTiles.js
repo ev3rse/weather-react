@@ -10,19 +10,8 @@ class ForecastTiles extends Component {
 			forecast: {}
 		};
 
-		this.currentUTC = Math.abs(new Date().getTimezoneOffset() * 60);
-
 		this.setForecast = this.setForecast.bind(this);
 	}
-
-	_getDate = (time) => {
-		let date = new Date(time * 1000);
-		let dd = String(date.getDate()).padStart(2, '0');
-		let mm = String(date.getMonth() + 1).padStart(2, '0');
-		let yyyy = date.getFullYear();
-
-		return yyyy + '-' + mm + '-' + dd;
-	};
 
 	_groupByDays = data => {
 		return (data.reduce((list, item) => {
@@ -34,9 +23,21 @@ class ForecastTiles extends Component {
 		}, {}));
 	};
 
+	_getDate = (time) => {
+		let date = new Date(time * 1000);
+		let dd = String(date.getDate()).padStart(2, '0');
+		let mm = String(date.getMonth() + 1).padStart(2, '0');
+		let yyyy = date.getFullYear();
+
+		return yyyy + '-' + mm + '-' + dd;
+	};
+
 	_getDayInfo = data => {
 		const daysOfWeek = [ 'ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
-		return daysOfWeek[new Date((data[0].dt + this.currentUTC) * 1000).getDay()];
+		const date = new Date((data[0].dt) * 1000);
+		const day = date.getDay();
+
+		return daysOfWeek[day];
 	};
 
 	_getIcon = data => `https://openweathermap.org/img/w/${data[0].weather[0].icon}.png`;
@@ -63,7 +64,7 @@ class ForecastTiles extends Component {
 		);
 	};
 
-	_showMoreInfo = (index) => {
+	_showMoreInfo = (index = 0) => {
 		const { forecasts } = this.props;
 		const tiles = Object.values(this._groupByDays(forecasts));
 

@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import DetailedInfo from "./DetailedInfo";
+import Slider from "react-slick";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 
 class ForecastTiles extends Component {
@@ -32,7 +36,13 @@ class ForecastTiles extends Component {
 		return yyyy + '-' + mm + '-' + dd;
 	};
 
-	_getDayInfo = data => {
+	_getDay = data => {
+		const date = new Date((data[0].dt) * 1000);
+
+		return String(date.getDate()).padStart(2, '0');
+	};
+
+	_getDayOfTheWeek = data => {
 		const daysOfWeek = [ 'ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
 		const date = new Date((data[0].dt) * 1000);
 		const day = date.getDay();
@@ -81,29 +91,43 @@ class ForecastTiles extends Component {
 		this._showMoreInfo();
 	}
 
+	settings = {
+		centerMode: true,
+		centerPadding: "0px",
+		focusOnSelect: true,
+		infinite: true,
+		touchMove: false,
+		slidesToShow: 5,
+		slidesToScroll: 1
+	};
+
 	render() {
 		const { forecasts } = this.props;
 		const forecastTiles = Object.values(this._groupByDays(forecasts));
 
 		return (
 			<div className="forecast">
+				<div className="weather-info">Выберите день</div>
 				<div className="forecast-tiles">
-					{forecastTiles.map((item, i) => (
-						<div
-							className={`forecast-tile tile-${i}`}
-							key={i}
-							ref={`div-${i}`}
-							onClick={() => {this._showMoreInfo(i)}}
-						>
-							<div className="primary-info">
-								<div className="icon">
-									<img src={this._getIcon(item)} alt="" />
-									<p>{this._getDayInfo(item)}</p>
+					<Slider {...this.settings}>
+						{forecastTiles.map((item, i) => (
+							<div
+								className={`forecast-tile tile-${i}`}
+								key={i}
+								ref={`div-${i}`}
+								onClick={() => {this._showMoreInfo(i)}}
+							>
+								<div className="primary-info">
+									<div className="icon">
+										<img src={this._getIcon(item)} alt="" />
+										<p>{this._getDay(item)}</p>
+										<p>{this._getDayOfTheWeek(item)}</p>
+									</div>
+									{this._getInfo(item)}
 								</div>
-								{this._getInfo(item)}
 							</div>
-						</div>
-					))}
+						))}
+					</Slider>
 				</div>
 
 				<div className={`detailed-info detailed-info-`}>

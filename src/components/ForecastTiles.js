@@ -77,6 +77,10 @@ class ForecastTiles extends Component {
 		})
 	};
 
+	componentDidMount() {
+		this._showMoreInfo();
+	}
+
 	render() {
 		const { forecasts } = this.props;
 		const forecastTiles = Object.values(this._groupByDays(forecasts));

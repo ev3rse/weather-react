@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import DetailedInfo from "./DetailedInfo";
 import Slider from "react-slick";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -10,11 +9,21 @@ class ForecastTiles extends Component {
 	constructor(props) {
 		super(props);
 
+		this._slickSettings = {
+			centerMode: true,
+			centerPadding: "0px",
+			focusOnSelect: true,
+			infinite: true,
+			touchMove: false,
+			slidesToShow: 3,
+			slidesToScroll: 1
+		};
+
 		this.state = {
 			forecast: {}
 		};
 
-		this.setForecast = this.setForecast.bind(this);
+		this._setForecast = this._setForecast.bind(this);
 	}
 
 	_groupByDays = data => {
@@ -74,32 +83,22 @@ class ForecastTiles extends Component {
 		);
 	};
 
-	_showMoreInfo = (index = 0) => {
-		const { forecasts } = this.props;
-		const tiles = Object.values(this._groupByDays(forecasts));
-
-		this.setForecast(tiles[index]);
-	};
-
-	setForecast(newForecast) {
+	_setForecast(newForecast) {
 		this.setState({
 			forecast: newForecast
 		})
 	};
 
+	_showMoreInfo = (index = 0) => {
+		const { forecasts } = this.props;
+		const tiles = Object.values(this._groupByDays(forecasts));
+
+		this._setForecast(tiles[index]);
+	};
+
 	componentDidMount() {
 		this._showMoreInfo();
 	}
-
-	settings = {
-		centerMode: true,
-		centerPadding: "0px",
-		focusOnSelect: true,
-		infinite: true,
-		touchMove: false,
-		slidesToShow: 5,
-		slidesToScroll: 1
-	};
 
 	render() {
 		const { forecasts } = this.props;
@@ -107,9 +106,9 @@ class ForecastTiles extends Component {
 
 		return (
 			<div className="forecast">
-				<div className="weather-info">Выберите день</div>
+				<div className="weather-info">Select day</div>
 				<div className="forecast-tiles">
-					<Slider {...this.settings}>
+					<Slider {...this._slickSettings}>
 						{forecastTiles.map((item, i) => (
 							<div
 								className={`forecast-tile tile-${i}`}

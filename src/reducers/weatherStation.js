@@ -12,6 +12,7 @@ export default function reducer(state = {
 				status: "success"
 			};
 		}
+
 		case FETCH_DATA_REJECTED: {
 			return {
 				...state,

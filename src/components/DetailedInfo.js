@@ -1,19 +1,26 @@
 import React from "react";
 import Slider from "react-slick";
 
+
 const DetailedInfo = ({ data }) => {
 	if (Object.entries(data).length !== 0 && data.constructor !== Object) {
+		const settings = {
+			infinite: false,
+			slidesToShow: 5,
+			swipeToSlide: true,
+			vertical: true,
+			verticalSwiping: true,
+			accessibility: false
+		};
+
 		const getHour = (time) => {
+			const date = new Date();
+
 			if (time) {
-				const date = new Date();
 				date.setTime(time * 1000);
-
-				return date.getHours();
-			} else {
-				const date = new Date();
-
-				return date.getHours();
 			}
+
+			return date.getHours();
 		};
 
 		const displayMoreInfo = (item, i) => {
@@ -31,15 +38,6 @@ const DetailedInfo = ({ data }) => {
 			);
 		};
 
-		const settings = {
-			infinite: false,
-			slidesToShow: 5,
-			swipeToSlide: true,
-			vertical: true,
-			verticalSwiping: true,
-			accessibility: false
-		};
-
 		return (
 			<div className="hourly">
 				<Slider {...settings} >
@@ -51,7 +49,7 @@ const DetailedInfo = ({ data }) => {
 		);
 	} else {
 		return (
-			<div className="forecast-empty">На указанную дату прогноз отсутствует</div>
+			<div className="forecast-empty">There is no forecast for this date</div>
 		)
 	}
 };

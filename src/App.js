@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-
 import { connect } from "react-redux";
 import { fetchData } from "./actions/weatherStation";
-
 import WeatherForecast from './components/WeatherForecast';
 
 
 class App extends Component {
-
-	// Fetches data by using geolocation. If the user blocks, or if the browser does not support the API,
-	// fallsback to default location of London
 	componentDidMount() {
 		const getPosition = (options) => (
 			new Promise((resolve, reject) => {
@@ -31,11 +26,11 @@ class App extends Component {
 
 		return (
 			forecast === null ? (
-				<div className="loading">
-					<div className="spinner"></div>
+				<div className="lds-ellipsis">
+					<div></div><div></div><div></div><div></div>
 				</div>
 			) : (
-				<div>
+				<div className="App">
 					<WeatherForecast data={forecast} />
 				</div>
 			)

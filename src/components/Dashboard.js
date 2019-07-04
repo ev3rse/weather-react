@@ -4,7 +4,6 @@ import { fetchData } from "../actions/weatherStation";
 
 
 class Dashboard extends Component {
-
 	_updateCity = () => {
 		const city = this.__cityInput.value;
 		city.length !== 0 ? this.props.dispatch(fetchData(city)) : null; // eslint-disable-line no-unused-expressions
@@ -15,7 +14,6 @@ class Dashboard extends Component {
 	};
 
 	render() {
-
 		const { city, status } = this.props;
 		const wrapperClass = (status === "failed") ? "weather-dashboard invalid-city" : "weather-dashboard";
 
@@ -51,7 +49,6 @@ class Dashboard extends Component {
 		);
 	}
 }
-
 
 const mapStateToProps = store => ({
 	status: store.weatherStation.status
